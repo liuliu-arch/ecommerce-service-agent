@@ -1,0 +1,4 @@
+agent:
+  service:
+    # 必须显式配置服务鉴权令牌。
+    auth-token: ${AGENT_SERVICE_AUTH_TOKEN:}

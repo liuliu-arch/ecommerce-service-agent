@@ -1,0 +1,59 @@
+schema_version: prompt_registry_v1
+description: 第 41 课总演习使用的轻量 Prompt 注册表，只管理稳定规则片段。
+
+prompts:
+  - name: prompt_security
+    level: global_policy
+    version: v1
+    load: always
+    priority: 100
+    status: active
+    description: 全局安全、事实优先级和敏感信息边界。
+
+  - name: system_customer_service
+    level: role
+    version: v1
+    load: always
+    priority: 90
+    status: active
+    description: 电商公司客服 Agent 的角色和事实来源边界。
+
+  - name: route_contract
+    level: task_contract
+    version: v1
+    load: when_route
+    priority: 80
+    status: active
+    description: 路由阶段的结构化输出契约和意图边界。
+
+  - name: high_risk_after_sale
+    level: risk_policy
+    version: v1
+    load: when_high_risk_after_sale
+    priority: 80
+    status: active
+    description: 退款、取消、补偿和审批等高风险售后边界。
+
+  - name: tool_usage
+    level: capability
+    version: v1
+    load: when_business_tool
+    priority: 70
+    status: active
+    description: 实时业务事实和工具 Observation 的使用边界。
+
+  - name: rag_answering
+    level: capability
+    version: v1
+    load: when_rag
+    priority: 60
+    status: active
+    description: RAG 引用作为数据依据而不是系统指令。
+
+  - name: final_answer_style
+    level: response_contract
+    version: v1
+    load: when_final_answer
+    priority: 40
+    status: active
+    description: 最终客服回答的语言和公开输出格式。

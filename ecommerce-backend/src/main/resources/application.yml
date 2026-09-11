@@ -1,0 +1,59 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: ecommerce-backend
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://mysql:3306/agent_demo?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        # 订单归属由应用层校验，避免 Hibernate 自动补建外键干扰本地初始化数据。
+        hbm2ddl.default_constraint_mode: NO_CONSTRAINT
+  jackson:
+    default-property-inclusion: non_null
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+agent:
+  service:
+    base-url: ${AGENT_SERVICE_BASE_URL:http://host.docker.internal:8000}
+    # 生产环境必须显式配置；空值时 Agent 服务身份不会被认证，高风险写接口默认拒绝。
+    auth-token: ${AGENT_SERVICE_AUTH_TOKEN:}
+    connect-timeout-ms: 2000
+    read-timeout-ms: 45000
+
+customer-service:
+  runtime-context:
+    # 订单上下文只携带安全摘要；截断状态会同步告诉 Agent，避免把“未加载”误判成“不存在”。
+    default-order-limit: ${CUSTOMER_SERVICE_RUNTIME_CONTEXT_DEFAULT_ORDER_LIMIT:10}
+    max-order-limit: ${CUSTOMER_SERVICE_RUNTIME_CONTEXT_MAX_ORDER_LIMIT:50}
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: ecommerce-demo
+      display-name: 电商公司客服/售后业务 API
+      packages-to-scan: com.teachdemo.ecommerce.controller
+
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+    swagger-model-name: Models
+    enable-version: true
+    enable-footer: false
+    enable-footer-custom: true
+    footer-custom-content: 电商公司客服/售后 Agent 课程项目 API 文档

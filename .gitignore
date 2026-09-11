@@ -1,0 +1,45 @@
+# Public code package local artifacts
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Python
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+.chroma/
+.workflow_checkpoints/
+course.env
+
+# Node / frontend
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Java / Maven
+target/
+.mvn/repository/
+
+# Runtime output
+logs/
+downloads/
+*.log
+*.pid
+test-results/
+playwright-report/
+coverage/
+
+# Local credentials and agent working files
+.env
+.env.*
+!.env.example
+!.env.sample
+.runtime/
+.pip-cache/
+.trae/
+.agents/
+.codex/
+
+.npm-cache/
+*.tar.gz
